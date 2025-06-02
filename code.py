@@ -4,8 +4,8 @@
 # Date: May 5 , 2025
 
 # pyright: reportMissingImports=false
-import stage
 import ugame
+import stage
 
 
 def game_scene():
@@ -30,6 +30,24 @@ def game_scene():
     # repeats forever, loops game
     while True:
         # get the user input
+        keys = ugame.buttons.get_pressed()
+
+        if keys & ugame.K_X:
+            print("B")
+        if keys & ugame.K_O:
+            print("A")
+        if keys & ugame.K_START:
+            print("Start")
+        if keys & ugame.K_SELECT:
+            print("Select")
+        if keys & ugame.K_RIGHT:
+            ship.move(ship.x + 1, ship.y)
+        if keys & ugame.K_LEFT:
+            ship.move(ship.x - 1, ship.y)
+        if keys & ugame.K_UP:
+            ship.move(ship.x, ship.y - 1)
+        if keys & ugame.K_DOWN:
+            ship.move(ship.x, ship.y + 1)
 
         # update the game logic
 
