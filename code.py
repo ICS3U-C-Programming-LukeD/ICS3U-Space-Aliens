@@ -4,8 +4,8 @@
 # Date: May 5 , 2025
 
 # pyright: reportMissingImports=false
-import ugame
 import stage
+import ugame
 
 
 def game_scene():
