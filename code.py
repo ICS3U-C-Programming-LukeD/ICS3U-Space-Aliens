@@ -3,8 +3,9 @@
 # Created By: Luke Di Bert
 # Date: May 5 , 2025
 
-import ugame
+# pyright: reportMissingImports=false
 import stage
+import ugame
 
 
 def game_scene():
