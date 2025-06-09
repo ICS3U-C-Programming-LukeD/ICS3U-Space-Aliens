@@ -6,55 +6,12 @@
 # pyright: reportMissingImports=false
 import ugame
 import stage
+import time
+import random
 
 import constants
-
-
-def menu_scene():
-
-    # image banks from the PyBadge files directory
-    image_bank_background = stage.Bank.from_bmp16("space_aliens_background.bmp")
-
-    # add text objects
-    text = []
-    text1 = stage.Text(
-        width=29, height=12, font=None, palette=constants.RED_PALETTE, buffer=None
-    )
-    text1.move(30, 10)
-    text1.text("  BIG BERT  \nGAME STUDIOS")
-    text.append(text1)
-
-    text2 = stage.Text(
-        width=29, height=12, font=None, palette=constants.RED_PALETTE, buffer=None
-    )
-    text2.move(30, 110)
-    text2.text("PRESS START!")
-    text.append(text2)
-
-    # sets the background to span across the whole screen
-    background = stage.Grid(
-        image_bank_background, constants.SCREEN_GRID_X, constants.SCREEN_GRID_Y
-    )
-
-    # sets refresh rate to 60 times a second
-    game = stage.Stage(ugame.display, constants.FPS)
-
-    # adds background to list
-    game.layers = text + [background]
-    game.render_block()
-
-    # repeats forever, loops game
-    while True:
-        # get the user input
-        keys = ugame.buttons.get_pressed()
-        if keys & ugame.K_START != 0:
-            game_scene()
-
-        # update the game logic
-        game.tick()
-
-
 def game_scene():
+    # this function is for the main game
 
     # image banks from the PyBadge files directory
     image_bank_background = stage.Bank.from_bmp16("space_aliens_background.bmp")
@@ -76,6 +33,11 @@ def game_scene():
     background = stage.Grid(
         image_bank_background, constants.SCREEN_GRID_X, constants.SCREEN_GRID_Y
     )
+    
+    for x_location in range(constants.SCREEN_GRID_X):
+        for y_location in range(constants.SCREEN_GRID_Y):
+            tile_picked = random.randint(2,3)
+            background.tile(x_location, y_location, tile_picked)
 
     # grabs image out of spritesheet bank and assigns it to ship variable
     ship = stage.Sprite(image_bank_sprite, 5, 75, 96)
@@ -137,6 +99,136 @@ def game_scene():
         game.render_sprites([ship] + [alien])
         game.tick()
 
+def tutorial_scene():
+    # this function is for the menu screen
+
+    # image banks from the PyBadge files directory
+    image_bank_background = stage.Bank.from_bmp16("space_aliens_background.bmp")
+
+    # add text objects
+    text = []
+    text1 = stage.Text(
+        width=15, height=12, font=None, palette=constants.RED_PALETTE, buffer=None
+    )
+    text1.move(20, 30)
+    text1.text("MOVE = UP,DOWN,    LEFT, RIGHT\n\nSHOOT = A")
+    text.append(text1)
+
+    text2 = stage.Text(
+        width=14, height=12, font=None, palette=constants.RED_PALETTE, buffer=None
+    )
+    text2.move(20, 100)
+    text2.text("B to return to Menu")
+    text.append(text2)
+
+    # sets the background to span across the whole screen
+    background = stage.Grid(
+        image_bank_background, constants.SCREEN_GRID_X, constants.SCREEN_GRID_Y
+    )
+
+    # sets refresh rate to 60 times a second
+    game = stage.Stage(ugame.display, constants.FPS)
+
+    # adds background to list
+    game.layers = text + [background]
+    game.render_block()
+    
+    # repeats forever, loops game
+    while True:
+        # get the user input
+        keys = ugame.buttons.get_pressed()
+        if keys & ugame.K_X != 0:
+            menu_scene()
+
+        # update the game logic
+        game.tick()
+
+
+def menu_scene():
+    # this function is for the menu screen
+
+    # image banks from the PyBadge files directory
+    image_bank_background = stage.Bank.from_bmp16("space_aliens_background.bmp")
+    
+    # add text objects
+    text = []
+    text1 = stage.Text(
+        width=29, height=12, font=None, palette=constants.RED_PALETTE, buffer=None
+    )
+    text1.move(30, 10)
+    text1.text("  EVIL QUINN   \n     V.S    \n    BERTY    \n      2      ")
+    text.append(text1)
+
+    text2 = stage.Text(
+        width=19, height=12, font=None, palette=constants.RED_PALETTE, buffer=None
+    )
+    text2.move(31, 80)
+    text2.text("Press START\nto play    \n\nPress SELECT\nfor tutorial")
+    text.append(text2)
+
+    # sets the background to span across the whole screen
+    background = stage.Grid(
+        image_bank_background, constants.SCREEN_GRID_X, constants.SCREEN_GRID_Y
+    )
+    
+    for x_location in range(constants.SCREEN_GRID_X):
+        for y_location in range(constants.SCREEN_GRID_Y):
+            tile_picked = random.randint(2,3)
+            background.tile(x_location, y_location, tile_picked)
+
+    # sets refresh rate to 60 times a second
+    game = stage.Stage(ugame.display, constants.FPS)
+
+    # adds background to list
+    game.layers = text + [background]
+    game.render_block()
+    
+    # repeats forever, loops game
+    while True:
+        # get the user input
+        keys = ugame.buttons.get_pressed()
+        if keys & ugame.K_START != 0:
+            game_scene()
+        if keys & ugame.K_SELECT != 0:
+            tutorial_scene()
+
+        # update the game logic
+        game.tick()
+
+
+def splash_scene():
+    # this function is for the splash screen
+
+    # image banks from the PyBadge files directory
+    image_bank_mt_background = stage.Bank.from_bmp16("mt_game_studio.bmp")
+    
+    text = []
+    text1 = stage.Text(
+        width=29, height=12, font=None, palette=constants.RED_PALETTE, buffer=None
+    )
+    text1.move(30, 50)
+    text1.text("  BIG BERT  \nGAME STUDIOS")
+    text.append(text1)
+
+    # sets the background to span across the whole screen
+    background = stage.Grid(
+        image_bank_mt_background, constants.SCREEN_GRID_X, constants.SCREEN_GRID_Y
+    )
+
+    # sets refresh rate to 60 times a second
+    game = stage.Stage(ugame.display, constants.FPS)
+
+    # adds background to list
+    game.layers = text + [background]
+    game.render_block()
+
+    while True:
+        # waits two seconds
+        time.sleep(2.0)
+        menu_scene()
+
+  
+splash_scene()
 
 if __name__ == "__main__":
     menu_scene()
